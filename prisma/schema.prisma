@@ -17,7 +17,7 @@ model Conference {
 
   userId             String
   title              String
-  data               DateTime
+  date               DateTime
   location           String
   description_points String[]
   description_full   String
