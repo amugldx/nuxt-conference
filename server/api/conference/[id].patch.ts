@@ -46,6 +46,10 @@ export default defineEventHandler(async event => {
 		data: {
 			...conferenceObject,
 		},
+		include: {
+			speakers: true,
+			organizers: true,
+		},
 	});
 	return updatedConference;
 });

@@ -2,14 +2,17 @@ import { prisma } from '~~/server/db';
 
 export default defineEventHandler(async event => {
 	const id = event.context.params.id;
-	const conference = await prisma.conference
+	const speaker = await prisma.conference
 		.findUnique({
 			where: {
 				id,
 			},
-			include: {
-				speakers: true,
-				organizers: true,
+			select: {
+				speakers: {
+					include: {
+						Schedule: true,
+					},
+				},
 			},
 		})
 		.catch(error => {
@@ -18,10 +21,10 @@ export default defineEventHandler(async event => {
 					event,
 					createError({
 						statusCode: 404,
-						statusMessage: 'Cannot find conference with given id',
+						statusMessage: 'Cannot find speaker with given id',
 					}),
 				);
 			}
 		});
-	return conference;
+	return speaker;
 });

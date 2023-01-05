@@ -29,7 +29,7 @@ const updateConferenceSchema = z.object({
 });
 
 export const checkUpdatedConferenceValidation = (
-	conferenceObject: conferenceBody,
+	conferenceObject: updateConferenceBody,
 ) => {
 	const result = updateConferenceSchema.safeParse(conferenceObject);
 	if (result.success === false) {

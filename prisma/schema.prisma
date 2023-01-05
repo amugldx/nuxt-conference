@@ -54,9 +54,9 @@ model Speaker {
   position     String
   company      String
   about        String
-  schedule     Schedule?
   Conference   Conference @relation(fields: [conferenceId], references: [id], onDelete: Cascade)
   conferenceId String     @db.Uuid
+  Schedule     Schedule?
 
   @@map("speakers")
 }
@@ -67,9 +67,9 @@ model Schedule {
   updatedAt DateTime @updatedAt
 
   time      DateTime
+  topic     String
   speaker   Speaker  @relation(fields: [speakerId], references: [id], onDelete: Cascade)
   speakerId String   @unique @db.Uuid
-  topic     String
 
   @@map("schedules")
 }
