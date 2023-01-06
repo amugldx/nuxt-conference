@@ -9,7 +9,7 @@ export default defineEventHandler(async event => {
 			event,
 			createError({
 				statusCode: 400,
-				statusMessage: 'You need to be logged in to create conference',
+				statusMessage: 'You need to be logged in to update conference',
 			}),
 		);
 	}

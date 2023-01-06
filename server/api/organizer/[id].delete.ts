@@ -8,12 +8,12 @@ export default defineEventHandler(async event => {
 			event,
 			createError({
 				statusCode: 400,
-				statusMessage: 'You need to be logged in to delete speaker',
+				statusMessage: 'You need to be logged in to delete organizer',
 			}),
 		);
 	}
 	const id = event.context.params.id;
-	const speaker = await prisma.speaker
+	const organizer = await prisma.organizer
 		.findUnique({
 			where: {
 				id,
@@ -25,13 +25,13 @@ export default defineEventHandler(async event => {
 					event,
 					createError({
 						statusCode: 404,
-						statusMessage: 'Cannot find speaker to delete with given id',
+						statusMessage: 'Cannot find organizer to delete with given id',
 					}),
 				);
 			}
 		});
-	if (speaker) {
-		await prisma.speaker
+	if (organizer) {
+		await prisma.organizer
 			.delete({
 				where: {
 					id,
@@ -43,7 +43,7 @@ export default defineEventHandler(async event => {
 						event,
 						createError({
 							statusCode: 400,
-							statusMessage: 'Cannot delete speaker with given id',
+							statusMessage: 'Cannot delete organizer with given id',
 						}),
 					);
 				}
