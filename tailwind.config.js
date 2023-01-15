@@ -7,11 +7,15 @@ module.exports = {
 		'./plugins/**/*.{js,ts}',
 		'./nuxt.config.{js,ts}',
 		'./app.vue',
+		'./formkit.config.ts',
 	],
 	theme: {
 		extend: {
 			colors: {
 				appRed: '#F35641',
+			},
+			fontFamily: {
+				inter: ['Inter'],
 			},
 		},
 	},
