@@ -4,6 +4,7 @@
 			<FormKit
 				type="form"
 				submit-label="Register"
+				:actions="false"
 				@submit="signUpUser"
 				:classes="{
 					messages: classes.messages,
@@ -86,6 +87,7 @@
 		if (error) {
 			validationError = error.message;
 		}
+		navigateTo('/dashboard');
 	};
 
 	const signUpUser = async () => {
@@ -100,9 +102,10 @@
 			}
 			if (data) {
 				isLoading = false;
+				validationError = '';
+				navigateTo('/dashboard');
 				formEmail = '';
 				formPassword = '';
-				navigateTo('/dashboard');
 			}
 		} else {
 			const { data, error } = await client.auth.signInWithPassword({
@@ -114,9 +117,10 @@
 			}
 			if (data) {
 				isLoading = false;
+				validationError = '';
+				navigateTo('/dashboard');
 				formEmail = '';
 				formPassword = '';
-				navigateTo('/dashboard');
 			}
 		}
 	};
