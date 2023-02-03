@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="grid w-screen place-items-center">
+		<div class="grid place-items-center">
 			<div class="mt-10 mb-20 md:w-[672px] w-full px-8 self-center">
 				<FormKit
 					type="form"
@@ -68,11 +68,11 @@
 							outer: 'mb-2 mt-10',
 							input: `${
 								isLoading ? 'cursor-wait' : 'cursor-pointer'
-							} bg-transparent font-bold text-white font-inter px-8 py-2 border border-white transition-all text-xs rounded-full hover:border-2 disabled:cursor-not-allowed`,
+							} bg-white font-bold text-black font-inter px-8 py-2 transition-all text-xs rounded-full hover:bg-white/75 disabled:cursor-not-allowed`,
 						}" />
 				</FormKit>
 
-				<div class="my-10 curs text-center">
+				<div class="my-10 text-center curs">
 					<h3 class="text-2xl font-bold">Organizers</h3>
 				</div>
 
@@ -105,14 +105,17 @@
 							name="logo"
 							:classes="{
 								...classes,
+								fileName: 'pr-10 text-xs',
+								inner:
+									'max-w-2xl px-3 rounded-lg mb-1 overflow-hidden font-inter text-white ',
 								input:
-									'w-full h-11 px-3 pt-2 rounded-lg border-none bg-white/70 font-inter text-base text-black placeholder-black focus:bg-white',
+									'w-full h-11 pt-2 rounded-lg bg-transparent font-inter text-base text-transparent hover:cursor-pointer placeholder-white focus:bg-transparent',
 							}"
 							accept=".jpg,.png,.svg,.ico"
 							validation="required" />
 						<div class="flex flex-wrap mb-10">
 							<span
-								class="m-1"
+								class="m-2"
 								v-for="organizer in organizersList"
 								:key="organizer.id"
 								><span
@@ -130,7 +133,7 @@
 								outer: 'mb-5',
 								input: `${
 									isLoading ? 'cursor-wait' : 'cursor-pointer'
-								} bg-transparent font-bold text-white font-inter px-8 py-2 border border-white transition-all text-xs rounded-full hover:border-2`,
+								} bg-white font-bold text-black font-inter px-8 py-2 transition-all text-xs rounded-full hover:bg-white/75`,
 							}" />
 					</FormKit>
 				</FormKit>
@@ -191,14 +194,17 @@
 							name="image"
 							:classes="{
 								...classes,
+								fileName: 'pr-10 text-xs',
+								inner:
+									'max-w-2xl px-3 rounded-lg mb-1 overflow-hidden font-inter text-white ',
 								input:
-									'w-full h-11 px-3 pt-2 rounded-lg border-none bg-white/70 font-inter text-base text-black placeholder-black focus:bg-white',
+									'w-full h-11 pt-2 rounded-lg bg-transparent font-inter text-base text-transparent hover:cursor-pointer placeholder-white focus:bg-transparent',
 							}"
 							accept=".jpg,.png,.svg,.ico"
 							validation="required" />
 						<div class="flex flex-wrap mb-10">
 							<span
-								class="m-1"
+								class="m-2"
 								v-for="speaker in speakersList"
 								:key="speaker.id"
 								><span
@@ -216,7 +222,7 @@
 								outer: 'mb-5',
 								input: `${
 									isLoading ? 'cursor-wait' : 'cursor-pointer'
-								} bg-transparent font-bold text-white font-inter px-8 py-2 border border-white transition-all text-xs rounded-full hover:border-2`,
+								} bg-white font-bold text-black font-inter px-8 py-2 transition-all text-xs rounded-full hover:bg-white/75`,
 							}" />
 					</FormKit>
 				</FormKit>
@@ -259,18 +265,25 @@
 		if (!user.value || disableConference === false || !conferId) {
 			return;
 		}
-		const { data } = await client.storage
+		const { data: iconPath } = await client.storage
 			.from('conference')
 			.upload(
 				`/organizer/${organizerFormData.logo[0].name}`,
 				organizerFormData.logo[0].file,
 			);
+		if (!iconPath) {
+			return;
+		}
+		const { data } = await client.storage
+			.from('conference')
+			.getPublicUrl(iconPath.path);
 		if (!data) {
 			return;
 		}
 		const newOrganizerData = {
 			conferenceId: conferId,
-			logo: data.path,
+			logo: iconPath.path,
+			logoUrl: data.publicUrl,
 			name: organizerFormData.name,
 			website: organizerFormData.website,
 		};
@@ -299,19 +312,26 @@
 		if (!user.value || disableConference === false || !conferId) {
 			return;
 		}
-		const { data } = await client.storage
+		const { data: imagePath } = await client.storage
 			.from('conference')
 			.upload(
 				`/speaker/${speakerFormData.image[0].name}`,
 				speakerFormData.image[0].file,
 			);
+		if (!imagePath) {
+			return;
+		}
+		const { data } = await client.storage
+			.from('conference')
+			.getPublicUrl(imagePath.path);
 		if (!data) {
 			return;
 		}
 		const newSpeakerData = {
 			conferenceId: conferId,
 			name: speakerFormData.name,
-			image: data.path,
+			image: imagePath.path,
+			imageUrl: data.publicUrl,
 			position: speakerFormData.position,
 			company: speakerFormData.company,
 			about: speakerFormData.about,
@@ -373,11 +393,13 @@
 
 	const classes = {
 		outer: 'mb-5',
-		label: 'block mb-1 font-bold text-sm font-inter',
-		inner: 'max-w-2xl rounded-lg mb-1 overflow-hidden font-inter text-black ',
+		label: 'block mb-3 text-white uppercase font-bold text-xs font-inter',
+		placeholder: 'text-textGray',
+		inner:
+			'max-w-2xl rounded-lg mb-1 border border-textGray overflow-hidden font-inter text-white ',
 		input:
-			'w-full h-11 px-3 rounded-lg border-none bg-white/70 font-inter text-base text-black placeholder-black focus:bg-white',
-		help: 'text-xs text-white font-inter',
+			'w-full h-11 px-3 rounded-lg bg-transparent font-inter text-base text-textGray placeholder-white focus:border-2',
+		help: 'text-xs text-white text-textGray font-inter',
 		messages: 'list-none p-0 mt-1 mb-0 font-inter',
 		message: 'text-appRed mb-1 text-xs font-inter',
 	};

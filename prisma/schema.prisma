@@ -35,6 +35,7 @@ model Organizer {
   updatedAt DateTime @updatedAt
 
   logo    String
+  logoUrl String
   name    String
   website String
 
@@ -51,6 +52,7 @@ model Speaker {
 
   name         String
   image        String
+  imageUrl     String
   position     String
   company      String
   about        String

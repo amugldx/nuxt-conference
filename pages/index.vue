@@ -1,7 +1,9 @@
 <template>
 	<div>
-		<div class="text-xs md:text-sm lg:text-base 2xl:text-lg">
-			<HomeNav />
+		<div class="min-h-screen text-xs md:text-sm lg:text-base 2xl:text-lg -z-40">
+			<div>
+				<HomeNav class="pt-6" />
+			</div>
 			<UICircle />
 			<div class="absolute w-full px-8 top-[30%] md:px-12 xl:px-40 md:relative">
 				<h1

@@ -15,4 +15,4 @@ export const useDashComponentStore = defineStore('component', () => {
 	});
 });
 
-export type DashComponentType = 'create' | 'edit' | 'dash';
+export type DashComponentType = 'create' | 'edit' | 'dash' | 'details';

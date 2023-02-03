@@ -131,10 +131,21 @@ export const conferenceRouter = router({
 					id: input.id,
 				},
 				data: {
-					people: input.person,
+					people: {
+						push: input.person,
+					},
 				},
 			});
 
 			return addedPerson;
 		}),
+
+	getAllConferencesWithId: publicProcedure.query(async ({ ctx }) => {
+		const allConferences = await ctx.prisma.conference.findMany({
+			select: {
+				id: true,
+			},
+		});
+		return allConferences;
+	}),
 });

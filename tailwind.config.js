@@ -13,11 +13,12 @@ module.exports = {
 		extend: {
 			colors: {
 				appRed: '#F35641',
+				textGray: '#747474',
 			},
 			fontFamily: {
 				inter: ['Inter'],
 			},
 		},
 	},
-	plugins: [],
+	plugins: [require('daisyui')],
 };

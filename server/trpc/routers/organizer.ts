@@ -6,6 +6,7 @@ export const organizerRouter = router({
 		.input(
 			z.object({
 				logo: z.string(),
+				logoUrl: z.string(),
 				name: z.string(),
 				website: z.string().url(),
 				conferenceId: z.string().uuid(),
@@ -33,29 +34,6 @@ export const organizerRouter = router({
 				},
 			});
 			return allOrganizers;
-		}),
-
-	updateOrganizer: publicProcedure
-		.input(
-			z.object({
-				id: z.string().uuid(),
-				logo: z.string().optional(),
-				name: z.string().optional(),
-				website: z.string().url().optional(),
-			}),
-		)
-		.mutation(async ({ input, ctx }) => {
-			const updatedOrganizer = await ctx.prisma.organizer.update({
-				where: {
-					id: input.id,
-				},
-				data: {
-					logo: input.logo,
-					name: input.name,
-					website: input.website,
-				},
-			});
-			return updatedOrganizer;
 		}),
 
 	deleteOrganizer: publicProcedure

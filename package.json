@@ -25,6 +25,8 @@
 		"@supabase/supabase-js": "^2.2.3",
 		"@trpc/client": "^10.9.0",
 		"@trpc/server": "^10.9.0",
+		"aos": "^2.3.4",
+		"daisyui": "^2.49.0",
 		"pinia": "^2.0.29",
 		"superjson": "^1.12.2",
 		"trpc-nuxt": "^0.5.0",

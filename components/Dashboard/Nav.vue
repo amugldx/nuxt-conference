@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<nav
-			class="sticky flex items-center justify-between w-screen px-8 bg-transparent lg:px-28 lg:h-28 h-14">
+			class="sticky flex items-center justify-between px-8 bg-transparent lg:px-28 lg:h-28 h-14">
 			<h3
 				@click="setDashComponentValue('dash')"
 				class="text-sm font-bold lg:text-xl hover:cursor-pointer"

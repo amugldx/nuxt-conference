@@ -7,6 +7,7 @@ export const speakerRouter = router({
 			z.object({
 				name: z.string(),
 				image: z.string(),
+				imageUrl: z.string(),
 				position: z.string(),
 				about: z.string(),
 				company: z.string(),
@@ -20,6 +21,7 @@ export const speakerRouter = router({
 				data: {
 					name: input.name,
 					image: input.image,
+					imageUrl: input.imageUrl,
 					position: input.position,
 					about: input.about,
 					company: input.company,
@@ -45,6 +47,9 @@ export const speakerRouter = router({
 			const allSpeakers = await ctx.prisma.speaker.findMany({
 				where: {
 					conferenceId: input.conferenceId,
+				},
+				include: {
+					Schedule: true,
 				},
 			});
 			return allSpeakers;
