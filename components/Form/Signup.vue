@@ -56,7 +56,7 @@
 						} bg-white font-bold text-black font-inter w-full rounded-lg h-10`,
 					}" />
 				<div class="mb-5 text-xs">
-					Already got an accout?
+					{{ isSignUp ? 'Already got an account?' : 'Are you new to the app?' }}
 					<span
 						@click="isSignUp = !isSignUp"
 						class="font-bold underline transition-all cursor-pointer"
